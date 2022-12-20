@@ -1,0 +1,30 @@
+{
+  "name": "izfs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "web/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack build --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sneakycrow/izfs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sneakycrow/izfs/issues"
+  },
+  "homepage": "https://github.com/sneakycrow/izfs#readme",
+  "dependencies": {
+    "@types/node": "^18.11.17",
+    "@types/react": "^18.0.26",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ts-loader": "^9.4.2",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}
