@@ -1,9 +1,16 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
+import ImageUploader from './ImageUploader';
 
 function App() {
   const [count, setCount] = useState(0)
+
+
+// Define a function to handle image uploads
+const handleImageUpload = (image: File) => {
+  // Do something with the uploaded image file, such as sending it to a server or storing it in a database
+};
 
   return (
     <div className="App">
@@ -23,6 +30,10 @@ function App() {
         <p>
           Edit <code>web/src/App.tsx</code> and save to test HMR
         </p>
+        <div>
+          <ImageUploader onImageUpload={handleImageUpload} />
+          {/* renders the ImageUploader component, passing the handleImageUpload function as a prop */}
+        </div>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
