@@ -1,10 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Route, Routes, redirect } from 'react-router-dom';
 import reactLogo from './assets/react.svg'
 import './App.css'
 import ImageUploader from './ImageUploader';
+import AuthPage from './AuthPage';
+import { getUser } from './services/login-utils';
 
 function App() {
   const [count, setCount] = useState(0)
+
+  const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    const user = getUser();
+   // setCurrentUser(user);
+  }, []);
 
 
 // Define a function to handle image uploads
