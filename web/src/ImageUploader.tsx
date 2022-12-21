@@ -22,7 +22,7 @@ const ImageUploader: React.FunctionComponent<Props> = ({ onImageUpload }) => {
     }
   };
 
-  // Map over the array of images, generating a button for each image
+  // Map over the array of images, generating a button for each image 
   return (
     <div>
       {images.map((image, index) => (

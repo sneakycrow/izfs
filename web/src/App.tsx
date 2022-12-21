@@ -32,7 +32,7 @@ const handleImageUpload = (image: File) => {
         </p>
         <div>
           <ImageUploader onImageUpload={handleImageUpload} />
-          {/* renders the ImageUploader component, passing the handleImageUpload function as a prop */}
+          {/* renders the ImageUploader component, passing the handleImageUpload function as a prop  */}
         </div>
       </div>
       <p className="read-the-docs">
