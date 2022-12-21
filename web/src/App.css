@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: white;
 }
 
 .logo {
@@ -32,10 +33,64 @@
   }
 }
 
+.App {
+  background-color: white;
+  color: black;
+}
+
 .card {
   padding: 2em;
 }
 
 .read-the-docs {
   color: #888;
+}
+
+.title-card {
+  display: 
+}
+
+.project-title {
+  font: inter;
+  font-weight: bold;
+}
+
+.tagline {
+  font: inter;
+  font-weight: bold;
+}
+
+.makers-prime {
+  display: flex;
+  justify-content: space-evenly
+}
+
+.makers {
+  font: inter;
+  font-weight: bold;
+}
+
+.zakk {
+  font: inter;
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-color: green;
+  text-decoration-thickness: 4px;
+}
+
+.eoaan {
+  font: inter;
+  font-weight: bold; 
+  text-decoration: underline;
+  text-decoration-color: red;
+  text-decoration-thickness: 4px;
+}
+
+.placeholder {
+  background-color: teal;
+  text-color: white;
+}
+
+body {
+  background-color: white;
 }
