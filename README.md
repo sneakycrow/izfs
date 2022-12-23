@@ -3,4 +3,5 @@
 
 A simple and minimal file sharing web application, including ffmpeg-enabled video streaming
 ## Requirements
- - Node version in `.nvmrc`
+ - node `18.12.1`
+ - rustc `1.63.0`
