@@ -1,0 +1,10 @@
+name: prerelease
+
+on:
+  release:
+    types:
+      - prereleased
+
+jobs:
+  build-api:
+    uses: sneakycrow/izfs/.github/workflows/prerelease.yml@izfs-5
