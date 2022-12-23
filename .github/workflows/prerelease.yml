@@ -7,4 +7,4 @@ on:
 
 jobs:
   build-api:
-    uses: sneakycrow/izfs/.github/workflows/prerelease.yml@izfs-5
+    uses: ./.github/workflows/build-api.yml
