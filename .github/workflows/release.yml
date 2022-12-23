@@ -1,9 +1,9 @@
-name: prerelease
+name: release
 
 on:
   release:
     types:
-      - prereleased
+      - released
 
 jobs:
   build-api:
