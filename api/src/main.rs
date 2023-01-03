@@ -1,6 +1,6 @@
 use std::net::SocketAddr;
 
-use axum::extract::Multipart;
+use axum::extract::{DefaultBodyLimit, Multipart};
 use axum::{routing::post, Router};
 use axum_extra::routing::SpaRouter;
 use tower_http::limit::RequestBodyLimitLayer;
@@ -15,6 +15,7 @@ async fn main() {
     let app: Router = Router::new()
         .merge(index)
         .route("/upload", post(upload))
+        .layer(DefaultBodyLimit::disable())
         .layer(RequestBodyLimitLayer::new(CONTENT_LENGTH_LIMIT));
 
     // run our app with hyper
