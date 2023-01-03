@@ -5,7 +5,7 @@ use axum::{routing::post, Router};
 use axum_extra::routing::SpaRouter;
 use tower_http::limit::RequestBodyLimitLayer;
 
-const CONTENT_LENGTH_LIMIT: usize = 20 * 1024 * 1024;
+const CONTENT_LENGTH_LIMIT: usize = 5 * 1024 * 1024 * 1024;
 
 #[tokio::main]
 async fn main() {
