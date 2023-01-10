@@ -1,6 +1,8 @@
+use std::io;
 use std::net::SocketAddr;
 
 use axum::extract::{DefaultBodyLimit, Multipart};
+use axum::http::{Method, Uri};
 use axum::{routing::post, Router};
 use axum_extra::routing::SpaRouter;
 
@@ -10,10 +12,11 @@ const CONTENT_LENGTH_LIMIT: usize = 5 * 1024 * 1024 * 1024;
 async fn main() {
     // initialize tracing
     tracing_subscriber::fmt::init();
-    let index = SpaRouter::new("/", "web/dist").index_file("index.html");
+    let index = SpaRouter::new("/assets", "web/dist/assets").index_file("../index.html");
+
     let app: Router = Router::new()
         .merge(index)
-        .route("/upload", post(upload))
+        .route("/api/upload", post(upload))
         .layer(DefaultBodyLimit::max(CONTENT_LENGTH_LIMIT));
 
     // run our app with hyper
