@@ -42,4 +42,10 @@
   text-align: center;
   font-size: 1.5rem;
   font-weight: bold;
+  opacity: 0.8;
+}
+
+.App button:hover {
+  cursor: pointer;
+  opacity: 1;
 }

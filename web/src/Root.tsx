@@ -1,6 +1,6 @@
-import './App.css'
+import './Root.css'
 
-function App() {
+function Root() {
   return (
     <div className="App">
         <h1>IZFS</h1>
@@ -11,4 +11,4 @@ function App() {
   )
 }
 
-export default App
+export default Root
