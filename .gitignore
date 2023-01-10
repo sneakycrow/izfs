@@ -19,3 +19,6 @@ Cargo.lock
 # Output directories
 dist/
 _data/
+
+# Environment variables
+.env*
