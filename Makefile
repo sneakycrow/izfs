@@ -9,3 +9,6 @@ install:
 build:
 	npm run build
 	cargo build
+
+build-image:
+	docker build -f config/api.Dockerfile -t sneakycrow/izfs:latest .

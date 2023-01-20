@@ -2,9 +2,9 @@ use std::io;
 use std::net::SocketAddr;
 
 use axum::extract::{DefaultBodyLimit, Multipart};
-use axum::http::{Method, Uri};
 use axum::{routing::post, Router};
 use axum_extra::routing::SpaRouter;
+use tower_http::trace::TraceLayer;
 
 const CONTENT_LENGTH_LIMIT: usize = 5 * 1024 * 1024 * 1024;
 
@@ -15,6 +15,7 @@ async fn main() {
     let index = SpaRouter::new("/assets", "web/dist/assets").index_file("../index.html");
 
     let app: Router = Router::new()
+        .layer(TraceLayer::new_for_http())
         .merge(index)
         .route("/api/upload", post(upload))
         .layer(DefaultBodyLimit::max(CONTENT_LENGTH_LIMIT));
@@ -30,9 +31,9 @@ async fn main() {
 }
 
 async fn upload(mut multipart: Multipart) {
-    while let Some(mut field) = multipart.next_field().await.unwrap() {
-        let name = field.name().unwrap().to_string();
-        let data = field.bytes().await.unwrap();
+    while let Some(mut _field) = multipart.next_field().await.unwrap() {
+        let name = _field.name().unwrap().to_string();
+        let data = _field.bytes().await.unwrap();
 
         println!("Length of `{}` is {} bytes", name, data.len());
     }
