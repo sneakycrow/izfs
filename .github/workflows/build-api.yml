@@ -6,8 +6,7 @@ on:
 jobs:
   build:
     name: build api package
-    runs-on:
-      labels: hermes-1
+    runs-on: hermes-1
     steps:
       - uses: actions/cache@v3
         with:
