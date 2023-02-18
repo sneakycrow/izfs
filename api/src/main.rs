@@ -18,6 +18,7 @@ async fn main() {
     // initialize spa router with the assets directory
     let index = SpaRouter::new("/assets", "web/dist/assets").index_file("../index.html");
 
+    // initialize router with tracing and body upload limit
     let app: Router = Router::new()
         .layer(TraceLayer::new_for_http())
         .merge(index)
