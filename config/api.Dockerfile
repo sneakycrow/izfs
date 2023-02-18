@@ -1,10 +1,10 @@
 FROM debian:bullseye-slim as runtime
 RUN apt update && apt install -y curl openssl
 
-WORKDIR /fulcrum
+WORKDIR /izfs
 
-COPY ./target/debug/fulcrum-api .
+COPY ./target/debug/izfs-api .
 
 EXPOSE 8000
 ENV PORT=8000
-CMD ["/fulcrum/fulcrum-api"]
+CMD ["/izfs/izfs-api"]
