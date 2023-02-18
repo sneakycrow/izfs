@@ -11,7 +11,11 @@ const CONTENT_LENGTH_LIMIT: usize = 5 * 1024 * 1024 * 1024;
 #[tokio::main]
 async fn main() {
     // initialize tracing
-    tracing_subscriber::fmt::init();
+    tracing_subscriber::fmt()
+        .with_target(false)
+        .compact()
+        .init();
+    // initialize spa router with the assets directory
     let index = SpaRouter::new("/assets", "web/dist/assets").index_file("../index.html");
 
     let app: Router = Router::new()
