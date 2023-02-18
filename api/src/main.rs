@@ -1,12 +1,13 @@
-use std::io;
 use std::net::SocketAddr;
 
 use axum::extract::{DefaultBodyLimit, Multipart};
 use axum::{routing::post, Router};
 use axum_extra::routing::SpaRouter;
 use tower_http::trace::TraceLayer;
+use tracing::info;
 
 const CONTENT_LENGTH_LIMIT: usize = 5 * 1024 * 1024 * 1024;
+const DEFAULT_PORT: u16 = 3000;
 
 #[tokio::main]
 async fn main() {
@@ -27,8 +28,8 @@ async fn main() {
 
     // run our app with hyper
     // `axum::Server` is a re-export of `hyper::Server`
-    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
-    tracing::debug!("listening on http://{}", addr);
+    let addr = SocketAddr::from(([127, 0, 0, 1], DEFAULT_PORT));
+    info!("listening on http://{}", addr);
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
         .await
