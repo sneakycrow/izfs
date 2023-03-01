@@ -17,7 +17,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: izfs-api
-
+      - run: ls -a
       - uses: mr-smithers-excellent/docker-build-push@v5
         name: build and push
         with:
