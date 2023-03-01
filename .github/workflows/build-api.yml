@@ -1,11 +1,11 @@
-name: api build
+name: build api
 on:
   workflow_dispatch:
   workflow_call:
 
 jobs:
   build-api:
-    name: push to ghcr
+    name: build api
     runs-on: ubuntu-22.04
     env:
       CARGO_TERM_COLOR: always
