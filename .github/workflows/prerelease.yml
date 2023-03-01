@@ -8,3 +8,44 @@ on:
 jobs:
   build-api:
     uses: ./.github/workflows/build-api.yml
+  deploy-ghcr:
+    name: deploy ghcr
+    runs-on: ubuntu-22.04
+    needs: [build-api]
+    steps:
+      - name: Download build-api binary
+        uses: actions/download-artifact@v3
+        with:
+          name: izfs-api
+      - run: ls -a
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: build and push
+        with:
+          image: ${{ github.repository }}-api
+          addLatest: true
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          dockerfile: config/api.Dockerfile
+
+  deploy-ecr:
+    name: deploy-ecr
+    runs-on: ubuntu-22.04
+    needs: [build-api]
+    steps:
+      - name: Download build-api binary
+        uses: actions/download-artifact@v3
+        with:
+          name: izfs-api
+
+      - uses: mr-smithers-excellent/docker-build-push@v5
+        name: build and push
+        with:
+          image: ${{ github.repository }}-api
+          pushImage: true
+          dockerfile: config/api.Dockerfile
+          registry: ${{ secrets.AWS_ECR_REGISTRY }}
+          addLatest: true
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

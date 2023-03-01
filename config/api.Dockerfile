@@ -3,7 +3,7 @@ RUN apt update && apt install -y curl openssl
 
 WORKDIR /izfs
 
-COPY ./target/debug/izfs-api .
+COPY ./izfs-api .
 
 EXPOSE 8000
 ENV PORT=8000
