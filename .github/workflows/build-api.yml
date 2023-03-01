@@ -1,11 +1,11 @@
-name: api build
+name: build api
 on:
   workflow_dispatch:
   workflow_call:
 
 jobs:
   build-api:
-    name: push to ghcr
+    name: build api
     runs-on: ubuntu-22.04
     env:
       CARGO_TERM_COLOR: always
@@ -15,7 +15,7 @@ jobs:
           rustup set auto-self-update disable
           rustup toolchain install stable --profile minimal
       - uses: Swatinem/rust-cache@v2
-      - run: cargo build --package fulcrum-api
+      - run: cargo build --package api
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v3
         with:
