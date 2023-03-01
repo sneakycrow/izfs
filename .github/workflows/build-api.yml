@@ -15,7 +15,7 @@ jobs:
           rustup set auto-self-update disable
           rustup toolchain install stable --profile minimal
       - uses: Swatinem/rust-cache@v2
-      - run: cargo build --package api
+      - run: cargo build --package izfs-api
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v3
         with:
