@@ -15,7 +15,7 @@ jobs:
           rustup set auto-self-update disable
           rustup toolchain install stable --profile minimal
       - uses: Swatinem/rust-cache@v2
-      - run: cargo build --package fulcrum-api
+      - run: cargo build --package api
       - uses: mr-smithers-excellent/docker-build-push@v5
         name: build and push
         with:
@@ -37,7 +37,7 @@ jobs:
           rustup set auto-self-update disable
           rustup toolchain install stable --profile minimal
       - uses: Swatinem/rust-cache@v2
-      - run: cargo build --package fulcrum-api
+      - run: cargo build --package api
       - uses: mr-smithers-excellent/docker-build-push@v5
         name: build and push
         with:
