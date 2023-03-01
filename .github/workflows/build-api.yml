@@ -2,7 +2,6 @@ name: api build
 on:
   workflow_dispatch:
   workflow_call:
-  pull_request:
 
 jobs:
   build-api:
@@ -16,9 +15,6 @@ jobs:
           rustup set auto-self-update disable
           rustup toolchain install stable --profile minimal
       - uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: api -> api
-
       - run: cargo build --package fulcrum-api
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v3
