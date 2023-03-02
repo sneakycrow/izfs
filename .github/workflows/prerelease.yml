@@ -13,11 +13,11 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [build-api]
     steps:
-      - name: Download build-api binary
+      - uses: actions/checkout@v3
+      - name: download izfs-api binary artifact
         uses: actions/download-artifact@v3
         with:
           name: izfs-api
-      - run: ls -a
       - uses: mr-smithers-excellent/docker-build-push@v5
         name: build and push
         with:
@@ -33,11 +33,11 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [build-api]
     steps:
-      - name: Download build-api binary
+      - uses: actions/checkout@v3
+      - name: download izfs-api binary artifact
         uses: actions/download-artifact@v3
         with:
           name: izfs-api
-
       - uses: mr-smithers-excellent/docker-build-push@v5
         name: build and push
         with:
