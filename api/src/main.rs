@@ -2,11 +2,11 @@ use std::net::SocketAddr;
 
 use axum::body::Body;
 use axum::extract::{DefaultBodyLimit, Multipart};
-use axum::http::{HeaderValue, Request};
+use axum::http::{Request};
 use axum::{routing::post, Router};
 use tower_http::services::ServeDir;
-use tower_http::trace::{MakeSpan, TraceLayer};
-use tracing::{info, span, Level, Span};
+use tower_http::trace::{TraceLayer};
+use tracing::{info, span, Level};
 use tracing_subscriber::EnvFilter;
 
 const CONTENT_LENGTH_LIMIT: usize = 5 * 1024 * 1024 * 1024;
