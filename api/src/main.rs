@@ -2,10 +2,10 @@ use std::net::SocketAddr;
 
 use axum::body::Body;
 use axum::extract::{DefaultBodyLimit, Multipart};
-use axum::http::{Request};
+use axum::http::Request;
 use axum::{routing::post, Router};
 use tower_http::services::ServeDir;
-use tower_http::trace::{TraceLayer};
+use tower_http::trace::TraceLayer;
 use tracing::{info, span, Level};
 use tracing_subscriber::EnvFilter;
 
@@ -43,7 +43,7 @@ async fn main() {
     // run our app with hyper
     // `axum::Server` is a re-export of `hyper::Server`
     let addr = SocketAddr::from(([127, 0, 0, 1], DEFAULT_PORT));
-    info!("listening on http://{}", addr);
+    info!("Listening on http://{}", addr);
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
         .await
