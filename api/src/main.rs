@@ -8,7 +8,7 @@ use tracing::{info, span, Level};
 use tracing_subscriber::EnvFilter;
 
 const CONTENT_LENGTH_LIMIT: usize = 5 * 1024 * 1024 * 1024;
-const DEFAULT_PORT: u16 = 3000;
+const DEFAULT_PORT: u16 = 8000;
 
 #[tokio::main]
 async fn main() {
