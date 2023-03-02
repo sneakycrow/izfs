@@ -4,8 +4,7 @@ on:
   workflow_call:
 
 jobs:
-  build-api:
-    name: build api
+  build:
     runs-on: ubuntu-22.04
     env:
       CARGO_TERM_COLOR: always
