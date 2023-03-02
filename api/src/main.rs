@@ -1,10 +1,12 @@
 use std::net::SocketAddr;
 
+use axum::body::Body;
 use axum::extract::{DefaultBodyLimit, Multipart};
+use axum::http::{HeaderValue, Request};
 use axum::{routing::post, Router};
 use tower_http::services::ServeDir;
-use tower_http::trace::TraceLayer;
-use tracing::{info, span, Level};
+use tower_http::trace::{MakeSpan, TraceLayer};
+use tracing::{info, span, Level, Span};
 use tracing_subscriber::EnvFilter;
 
 const CONTENT_LENGTH_LIMIT: usize = 5 * 1024 * 1024 * 1024;
@@ -19,14 +21,24 @@ async fn main() {
         .with_env_filter(EnvFilter::from_default_env())
         .init();
 
-    span!(Level::DEBUG, "initializing app router");
+    span!(Level::DEBUG, "Initializing izfs-api");
 
     // initialize router with tracing and body upload limit
     let app: Router = Router::new()
+        .layer(
+            TraceLayer::new_for_http().make_span_with(|request: &Request<Body>| {
+                let headers = request.headers();
+                let ip = match headers.get("X-Forwarded-Proto") {
+                    Some(ip) => ip.to_str().unwrap(),
+                    None => "missing X-Forwarded-Proto header",
+                };
+
+                span!(Level::INFO, "Request received from {}", ip)
+            }),
+        )
         .nest_service("/", ServeDir::new("web/dist"))
         .route("/api/upload", post(upload))
-        .layer(DefaultBodyLimit::max(CONTENT_LENGTH_LIMIT))
-        .layer(TraceLayer::new_for_http());
+        .layer(DefaultBodyLimit::max(CONTENT_LENGTH_LIMIT));
 
     // run our app with hyper
     // `axum::Server` is a re-export of `hyper::Server`
