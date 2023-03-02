@@ -2,29 +2,31 @@ use std::net::SocketAddr;
 
 use axum::extract::{DefaultBodyLimit, Multipart};
 use axum::{routing::post, Router};
-use axum_extra::routing::SpaRouter;
+use tower_http::services::ServeDir;
 use tower_http::trace::TraceLayer;
-use tracing::info;
+use tracing::{info, span, Level};
+use tracing_subscriber::EnvFilter;
 
 const CONTENT_LENGTH_LIMIT: usize = 5 * 1024 * 1024 * 1024;
 const DEFAULT_PORT: u16 = 3000;
 
 #[tokio::main]
 async fn main() {
-    // initialize tracing
+    // Initialize environment logger for all macros to use
     tracing_subscriber::fmt()
         .with_target(false)
         .compact()
+        .with_env_filter(EnvFilter::from_default_env())
         .init();
-    // initialize spa router with the assets directory
-    let index = SpaRouter::new("/assets", "web/dist/assets").index_file("../index.html");
+
+    span!(Level::DEBUG, "initializing app router");
 
     // initialize router with tracing and body upload limit
     let app: Router = Router::new()
-        .layer(TraceLayer::new_for_http())
-        .merge(index)
+        .nest_service("/", ServeDir::new("web/dist"))
         .route("/api/upload", post(upload))
-        .layer(DefaultBodyLimit::max(CONTENT_LENGTH_LIMIT));
+        .layer(DefaultBodyLimit::max(CONTENT_LENGTH_LIMIT))
+        .layer(TraceLayer::new_for_http());
 
     // run our app with hyper
     // `axum::Server` is a re-export of `hyper::Server`
