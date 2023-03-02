@@ -6,7 +6,7 @@ use axum::http::Request;
 use axum::{routing::post, Router};
 use tower_http::services::ServeDir;
 use tower_http::trace::TraceLayer;
-use tracing::{info, span, Level};
+use tracing::{event, span, Level, Span};
 use tracing_subscriber::EnvFilter;
 
 const CONTENT_LENGTH_LIMIT: usize = 5 * 1024 * 1024 * 1024;
@@ -25,25 +25,28 @@ async fn main() {
 
     // initialize router with tracing and body upload limit
     let app: Router = Router::new()
-        .layer(
-            TraceLayer::new_for_http().make_span_with(|request: &Request<Body>| {
-                let headers = request.headers();
-                let ip = match headers.get("X-Forwarded-Proto") {
-                    Some(ip) => ip.to_str().unwrap(),
-                    None => "missing X-Forwarded-Proto header",
-                };
-
-                span!(Level::INFO, "Request received from {}", ip)
-            }),
-        )
         .nest_service("/", ServeDir::new("web/dist"))
         .route("/api/upload", post(upload))
-        .layer(DefaultBodyLimit::max(CONTENT_LENGTH_LIMIT));
+        .layer(DefaultBodyLimit::max(CONTENT_LENGTH_LIMIT))
+        .layer(
+            TraceLayer::new_for_http()
+                .make_span_with(|_request: &Request<Body>| span!(Level::INFO, "http-request"))
+                .on_request(|request: &Request<Body>, _span: &Span| {
+                    event!(
+                        Level::INFO,
+                        "request: {} {}",
+                        request.method(),
+                        request.uri().path()
+                    )
+                }),
+        );
 
     // run our app with hyper
     // `axum::Server` is a re-export of `hyper::Server`
     let addr = SocketAddr::from(([127, 0, 0, 1], DEFAULT_PORT));
-    info!("Listening on http://{}", addr);
+
+    event!(Level::INFO, "Starting on http://{}", addr);
+
     axum::Server::bind(&addr)
         .serve(app.into_make_service())
         .await
