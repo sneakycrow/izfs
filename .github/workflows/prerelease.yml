@@ -22,7 +22,7 @@ jobs:
         name: build and push
         with:
           image: ${{ github.repository }}-api
-          addLatest: true
+          addLatest: false
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
@@ -42,10 +42,9 @@ jobs:
         name: build and push
         with:
           image: ${{ github.repository }}-api
-          pushImage: true
           dockerfile: config/api.Dockerfile
           registry: ${{ secrets.AWS_ECR_REGISTRY }}
-          addLatest: true
+          addLatest: false
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
